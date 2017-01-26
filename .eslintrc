@@ -229,6 +229,7 @@
         "react/jsx-indent-props": [2, 2],
         "react/jsx-uses-react": 2,
         "react/jsx-uses-vars": 2,
-        "react/self-closing-comp": 2
+        "react/self-closing-comp": 2,
+        "react/prop-types": 0
     }
 }
