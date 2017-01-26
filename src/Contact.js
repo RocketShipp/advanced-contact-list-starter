@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class Contact extends Component {
   render() {
     return (
-      <li className="contact">
+      <li className="contact animated flipInX">
         <div className="image-cropper">
           <img src={this.props.avatar} alt="avatar" />
         </div>
