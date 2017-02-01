@@ -1,19 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Contact extends Component {
-  render() {
-    return (
-      <li className="contact animated flipInX">
-        <div className="image-cropper">
-          <img src={this.props.avatar} alt="avatar" />
-        </div>
-        <div className="contact-info">
-          <h2>{this.props.name}</h2>
-          {this.props.occupation}
-        </div>
-      </li>
-    );
-  }
-}
+const Contact = props => {
+  return (
+    <li className="contact animated flipInX" onClick={() => props.clickHandle(props.id)}>
+      <div className="image-cropper">
+        <img src={props.avatar} alt="avatar"/>
+      </div>
+      <div className="contact-info">
+        <h2>{props.name}</h2>
+        {props.occupation.toUpperCase()}
+      </div>
+    </li>
+  );
+};
+
+React.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  occupation: React.PropTypes.string.isRequired,
+  avatar: React.PropTypes.string.isRequired,
+  handleSelect: React.PropTypes.func.isRequired
+};
 
 export default Contact;
