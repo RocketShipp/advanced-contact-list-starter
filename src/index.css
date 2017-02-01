@@ -35,12 +35,6 @@ body {
   text-shadow: 3px 3px 3px black;
 }
 
-.selected-contacts > p {
-  color: red;
-  font-size: 30px;
-  text-shadow: 3px 2px 3px black;
-}
-
 .search-bar {
   height: 35px;
   width: 100%;
@@ -168,4 +162,17 @@ body {
 .new-contact-form input[type="submit"]:disabled {
   background: gray;
   color: white;
+}
+.my-btn {
+  border: none;
+  border-bottom: 5px solid #007a99;
+  border-radius: 20px;
+  background-color: rgba(0,0,0,.5);
+  color: white;
+  font-size: 20px;
+  padding: 15px 30px;
+  font-weight: bold;
+}
+.my-btn:focus {
+  outline: none;
 }

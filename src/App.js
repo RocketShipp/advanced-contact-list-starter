@@ -65,6 +65,11 @@ class App extends Component {
       selectedContactIds: this.state.selectedContactIds
     })
   }
+  resetSelectedIds() {
+    this.setState({
+      selectedContactIds: []
+    });
+  }
   render() {
     return (
       <div className="App">
@@ -84,6 +89,7 @@ class App extends Component {
           contacts={this.getSelectedContacts()}
           clickHandle={this.handleDeselectContact.bind(this)}
         />
+        <button className="my-btn" onClick={() => this.resetSelectedIds()}>Reset</button>
       </div>
     );
   }
