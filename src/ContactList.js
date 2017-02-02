@@ -22,4 +22,9 @@ const ContactList = props => {
   );
 };
 
+ContactList.propTypes = {
+  contacts: React.PropTypes.array.isRequired,
+  clickHandle: React.PropTypes.func.isRequired
+};
+
 export default ContactList;

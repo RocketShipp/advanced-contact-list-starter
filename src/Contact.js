@@ -8,13 +8,14 @@ const Contact = props => {
       </div>
       <div className="contact-info">
         <h2>{props.name}</h2>
-        {props.occupation.toUpperCase()}
+        {props.occupation}
       </div>
     </li>
   );
 };
 
 React.propTypes = {
+  id: React.PropTypes.number.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
   avatar: React.PropTypes.string.isRequired,
