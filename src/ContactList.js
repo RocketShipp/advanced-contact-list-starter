@@ -14,6 +14,7 @@ const ContactList = props => {
               avatar={contact.avatar}
               occupation={contact.occupation}
               clickHandle={props.clickHandle}
+              permDelete={props.permDelete}
             />
           );
         })}

@@ -3,6 +3,7 @@ import ActionLog from './ActionLog';
 import ContactList from './ContactList';
 import SearchBar from './SearchBar';
 import axios from 'axios';
+import ContactForm from './ContactForm';
 
 class App extends Component {
 
@@ -27,7 +28,35 @@ class App extends Component {
         console.error(`Error! ${err}`);
       });
   }
-
+  handleAddContact(attributes) {
+    axios.post('http://localhost:4000/contacts', attributes)
+      .then(resp => {
+        this.setState({
+          contacts: [...this.state.contacts, resp.data],
+          actionLog: [...this.state.actionLog, `Added ${resp.data.name}, ${resp.data.occupation}`]
+        });
+      })
+      .catch(err => {
+        console.error(`Error ${err}`);
+      });
+  }
+  handleDeleteContact(_id) {
+    const contArr = (this.state.contacts.map(contact => {
+      return contact._id;
+    }));
+    axios.delete(`http://localhost:4000/contacts/${_id}`)
+      .then(resp => {
+        const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
+        console.log(resp.data);
+        this.setState({
+          contacts: newContacts,
+          actionLog: [...this.state.actionLog,
+            `Permanently deleted ${this.state.contacts[contArr.indexOf(_id)].name},
+            ${this.state.contacts[contArr.indexOf(_id)].occupation}`]
+        });
+      })
+      .catch(err => console.error(`ERROR! ${err}`));
+  }
   handleSearchBarChange(event) {
     this.setState({
       searchText: event.target.value
@@ -92,32 +121,41 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="row appRow">
-        <div className="App col-xs-7">
-          <p>Contacts</p>
-          <SearchBar
-            value={this.state.searchText}
-            onChange={this.handleSearchBarChange.bind(this)}
-          />
-          <ContactList
-            contacts={this.getFilteredContacts()}
-            clickHandle={this.handleSelectContact.bind(this)}
-          />
-          <p>Selected Contacts</p>
-          <ContactList
-            contacts={this.getSelectedContacts()}
-            clickHandle={this.handleDeselectContact.bind(this)}
-          />
-          <button className="my-btn" onClick={() => this.resetSelectedIds()}>Reset</button>
+      <div className="row-containers">
+        <div className="row submitRow">
+          <div className="App col-xs-12">
+            <ContactForm onSubmit={this.handleAddContact.bind(this)}/>
+          </div>
         </div>
-        <div className="actionLogContainer col-xs-offset-1 col-xs-4">
-          <p>Action Log</p>
-          <div className="actionLog">
-            <ActionLog
-              actionLog={this.state.actionLog}
-              clickHandle={this.deleteLog.bind(this)}
+        <div className="row appRow">
+          <div className="App col-xs-7">
+            <p>Contacts</p>
+            <SearchBar
+              value={this.state.searchText}
+              onChange={this.handleSearchBarChange.bind(this)}
             />
-            <button className="my-btn" onClick={() => this.clearLogs()}>Clear Logs</button>
+            <ContactList
+              contacts={this.getFilteredContacts()}
+              clickHandle={this.handleSelectContact.bind(this)}
+              permDelete={this.handleDeleteContact.bind(this)}
+            />
+            <p>Selected Contacts</p>
+            <ContactList
+              contacts={this.getSelectedContacts()}
+              clickHandle={this.handleDeselectContact.bind(this)}
+              permDelete={this.handleDeleteContact.bind(this)}
+            />
+            <button className="my-btn" onClick={() => this.resetSelectedIds()}>Reset</button>
+          </div>
+          <div className="actionLogContainer col-xs-5">
+            <p>Action Log</p>
+            <div className="actionLog">
+              <ActionLog
+                actionLog={this.state.actionLog}
+                clickHandle={this.deleteLog.bind(this)}
+              />
+              <button className="my-btn" onClick={() => this.clearLogs()}>Clear Logs</button>
+            </div>
           </div>
         </div>
       </div>
