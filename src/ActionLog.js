@@ -4,10 +4,10 @@ import Log from './Log';
 const ActionLog = props => {
   return (
     <ul className="contact-list">
-      {props.actionLog.map(log => {
+      {props.actionLog.map((log, index) => {
         return (
           <Log
-            key={log._id}
+            key={index}
             actionLogArray={props.actionLog}
             log={log}
             clickHandle={props.clickHandle}
