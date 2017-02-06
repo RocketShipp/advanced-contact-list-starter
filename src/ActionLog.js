@@ -7,7 +7,7 @@ const ActionLog = props => {
       {props.actionLog.map(log => {
         return (
           <Log
-            key={props.actionLog.indexOf(log)._id}
+            key={log._id}
             actionLogArray={props.actionLog}
             log={log}
             clickHandle={props.clickHandle}

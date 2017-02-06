@@ -65,4 +65,7 @@ class ContactForm extends Component {
     );
   }
 }
+ContactForm.propTypes = {
+  onSubmit: React.PropTypes.func.isRequired
+};
 export default ContactForm;
