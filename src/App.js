@@ -28,6 +28,11 @@ class App extends Component {
         console.error(`Error! ${err}`);
       });
   }
+  componentDidUpdate() {
+    if (this.state.actionLog.length === 10) {
+      this.state.actionLog.shift();
+    }
+  }
   handleAddContact(attributes) {
     axios.post('http://localhost:4000/contacts', attributes)
       .then(resp => {
@@ -47,7 +52,6 @@ class App extends Component {
     axios.delete(`http://localhost:4000/contacts/${_id}`)
       .then(resp => {
         const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
-        console.log(resp.data);
         this.setState({
           contacts: newContacts,
           actionLog: [...this.state.actionLog,
@@ -85,9 +89,9 @@ class App extends Component {
     }));
     this.setState({
       selectedContactIds: this.state.selectedContactIds.concat(id),
-      actionLog: this.state.actionLog
-        .concat(`Selected ${(this.state.contacts[contArr.indexOf(id)].name)},
-        ${(this.state.contacts[contArr.indexOf(id)].occupation)}`)
+      actionLog: [...this.state.actionLog,
+        (`Selected ${(this.state.contacts[contArr.indexOf(id)].name)},
+        ${(this.state.contacts[contArr.indexOf(id)].occupation)}`)]
     });
   }
   handleDeselectContact(id) {
@@ -97,15 +101,15 @@ class App extends Component {
     this.state.selectedContactIds.splice(this.state.selectedContactIds.indexOf(id), 1);
     this.setState({
       selectedContactIds: this.state.selectedContactIds,
-      actionLog: this.state.actionLog
-        .concat(`Removed ${this.state.contacts[id - 1].name},
-        ${this.state.contacts[id - 1].occupation}`)
+      actionLog: [...this.state.actionLog,
+        (`Deselected ${this.state.contacts[contArr.indexOf(id)].name},
+        ${this.state.contacts[contArr.indexOf(id)].occupation}`)]
     });
   }
   resetSelectedIds() {
     this.setState({
       selectedContactIds: [],
-      actionLog: this.state.actionLog.concat('Contacts reset')
+      actionLog: [...this.state.actionLog, ('Contacts reset')]
     });
   }
   deleteLog(log) {
@@ -118,6 +122,16 @@ class App extends Component {
     this.setState({
       actionLog: []
     });
+  }
+  noSelectedContacts() {
+    if (this.state.selectedContactIds.length === 0 ) {
+      return <h2 className="noContacts">To select a contact, click the picture</h2>;
+    }
+  }
+  fetchingContacts() {
+    if (this.state.contacts.length === 0) {
+      return <h2 className="noContacts">Loading contacts...</h2>;
+    }
   }
   render() {
     return (
@@ -138,12 +152,14 @@ class App extends Component {
               contacts={this.getFilteredContacts()}
               clickHandle={this.handleSelectContact.bind(this)}
               permDelete={this.handleDeleteContact.bind(this)}
+              noContacts={this.fetchingContacts()}
             />
             <p>Selected Contacts</p>
             <ContactList
               contacts={this.getSelectedContacts()}
               clickHandle={this.handleDeselectContact.bind(this)}
               permDelete={this.handleDeleteContact.bind(this)}
+              noContacts={this.noSelectedContacts()}
             />
             <button className="my-btn" onClick={() => this.resetSelectedIds()}>Reset</button>
           </div>

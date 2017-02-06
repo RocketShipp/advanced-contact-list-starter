@@ -19,12 +19,11 @@ const Contact = props => {
   );
 };
 
-React.propTypes = {
+Contact.propTypes = {
   id: React.PropTypes.number.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
-  avatar: React.PropTypes.string.isRequired,
-  handleSelect: React.PropTypes.func.isRequired
+  avatar: React.PropTypes.string.isRequired
 };
 
 export default Contact;

@@ -5,6 +5,7 @@ const ContactList = props => {
   return (
     <div>
       <ul className="contact-list">
+        {props.noContacts}
         {props.contacts.map(contact => {
           return (
             <Contact
@@ -25,7 +26,8 @@ const ContactList = props => {
 
 ContactList.propTypes = {
   contacts: React.PropTypes.array.isRequired,
-  clickHandle: React.PropTypes.func.isRequired
+  clickHandle: React.PropTypes.func.isRequired,
+  permDelete: React.PropTypes.func.isRequired
 };
 
 export default ContactList;

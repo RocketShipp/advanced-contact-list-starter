@@ -121,6 +121,13 @@ body {
   height: 100%;
 }
 
+.noContacts {
+  font-size: 25px;
+  color: red;
+  text-shadow: 3px 3px 3px black;
+  margin-bottom: 20px;
+}
+
 .contact .contact-info {
   flex: 1;
   display: flex;
