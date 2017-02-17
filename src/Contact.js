@@ -20,7 +20,7 @@ const Contact = props => {
 };
 
 Contact.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   occupation: React.PropTypes.string.isRequired,
   avatar: React.PropTypes.string.isRequired

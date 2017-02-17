@@ -18,7 +18,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    axios.get('http://localhost:4000/contacts')
+    axios.get('/contacts')
       .then(resp => {
         this.setState({
           contacts: resp.data
@@ -34,7 +34,7 @@ class App extends Component {
     }
   }
   handleAddContact(attributes) {
-    axios.post('http://localhost:4000/contacts', attributes)
+    axios.post('/contacts', attributes)
       .then(resp => {
         this.setState({
           contacts: [...this.state.contacts, resp.data],
@@ -49,7 +49,7 @@ class App extends Component {
     const contArr = (this.state.contacts.map(contact => {
       return contact._id;
     }));
-    axios.delete(`http://localhost:4000/contacts/${_id}`)
+    axios.delete(`/contacts/${_id}`)
       .then(resp => {
         const newContacts = this.state.contacts.filter(contact => contact._id !== _id);
         this.setState({
